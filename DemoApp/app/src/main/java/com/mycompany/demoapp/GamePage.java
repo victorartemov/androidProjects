@@ -6,12 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-
-import java.util.logging.LogRecord;
-
-import android.os.Message;
-import android.os.Handler;
-
 public class GamePage extends AppCompatActivity implements View.OnClickListener {
 
     TextView timeTextView;
@@ -23,26 +17,34 @@ public class GamePage extends AppCompatActivity implements View.OnClickListener 
     TextView ans3;
     TextView ans4;
 
-    int score;
-    int currentQuestionNumber;
-    int countOfQuestions;
+    int score = 0;
+    int currentQuestionNumber = 0;
+    int countOfQuestions = 0;
+
     Game game = new Game();
+    GameItem currentQuestion = new GameItem();
 
-    // Пока задания для теста/игры будут лежать тут в строках, потом скорее всего
-    // сделаю маленькую бд
-
-    String[] questions = {
-            "25 * 5 = ?#115#110#100#125#125",
-            "174 - 28 = ?#144#156#148#146#146",
-            "153 + 27 = ?#180#170#167#177#180",
-            "80% от 100 = ?#74#80#88#100#80",
-            "18 * 3 = ?#54#46#56#58#54",
-            "100 - 23 + 33 = ?#103#105#100#110#110",
-            "15 * 2 * 3 = ?#65#75#80#90#90",
-            "2 * 2 + 2 = ?#4#8#6#10#6",
-            "2 * (2 + 2) = ?#6#8#10#4#8",
-            "20 % от 80 = ?#8#18#16#20#16"
-    };
+    public void addQuestionsToGame() {
+        game.addGameItem(new GameItem("25 + 17 = ?", "39", "42", "43", "41", "42"));
+        game.addGameItem(new GameItem("18 x 3 = ?", "56", "61", "48", "54", "54"));
+        game.addGameItem(new GameItem("120 - 47 = ?", "77", "73", "93", "83", "73"));
+        game.addGameItem(new GameItem("15% от 100 = ?", "15", "1", "25", "93", "83"));
+        game.addGameItem(new GameItem("1000/20 = ?", "250", "60", "50", "80", "50"));
+        game.addGameItem(new GameItem("99/1 = ?", "1", "33", "99", "90", "99"));
+        game.addGameItem(new GameItem("84 x 3 = ?", "256", "252", "196", "214", "252"));
+        game.addGameItem(new GameItem("20% от 120 = ?", "26", "30", "44", "24", "24"));
+        game.addGameItem(new GameItem("18 - (-18) = ?", "0", "18", "36", "-18", "36"));
+        game.addGameItem(new GameItem("98 х 2 = ?", "181", "191", "196", "186", "196"));
+        game.addGameItem(new GameItem("11 х 11 = ?", "111", "131", "121", "141", "121"));
+        game.addGameItem(new GameItem("13 х 13 = ?", "118", "213", "179", "169", "169"));
+        game.addGameItem(new GameItem("36 + 18 = ?", "52", "48", "56", "54", "54"));
+        game.addGameItem(new GameItem("8% от 20 = ?", "16", "1,4", "1,6", "14", "1,6"));
+        game.addGameItem(new GameItem("32/2 = ?", "18", "17", "16", "15", "16"));
+        game.addGameItem(new GameItem("98 - 19 = ?", "69", "79", "81", "71", "79"));
+        game.addGameItem(new GameItem("18 + 3 - 7 = ?", "15", "13", "14", "11", "14"));
+        game.addGameItem(new GameItem("100 / 2 x 5 = ?", "55", "250", "255", "25", "250"));
+        game.addGameItem(new GameItem("19 х 6 = ?", "110", "112", "144", "114", "114"));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,73 +54,71 @@ public class GamePage extends AppCompatActivity implements View.OnClickListener 
         timeTextView = (TextView) findViewById(R.id.timeTextView);
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
         questionTextView = (TextView) findViewById(R.id.questionTextView);
-
         ans1 = (TextView) findViewById(R.id.ans1);
         ans2 = (TextView) findViewById(R.id.ans2);
         ans3 = (TextView) findViewById(R.id.ans3);
         ans4 = (TextView) findViewById(R.id.ans4);
-
         ans1.setOnClickListener(this);
         ans2.setOnClickListener(this);
         ans3.setOnClickListener(this);
         ans4.setOnClickListener(this);
 
+        this.addQuestionsToGame();
         score = 0;
         currentQuestionNumber = 0;
-        countOfQuestions = 10;
+        countOfQuestions = 3
+        ;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        game.getNewTask(questions[currentQuestionNumber++]);
         updateScreen();
     };
 
-
     @Override
     public void onClick(View v) {
-        Intent i = new Intent(GamePage.this, ResultActivity.class);
         switch (v.getId()) {
             case R.id.ans1:
-                if (ans1.getText().equals(game.getRightAnswer()))
+                if (ans1.getText().equals(currentQuestion.getRightAnswer()))
                     score += 100;
                 break;
 
             case R.id.ans2:
-                if (ans2.getText().equals(game.getRightAnswer()))
+                if (ans2.getText().equals(currentQuestion.getRightAnswer()))
                     score += 100;
                 break;
 
             case R.id.ans3:
-                if (ans3.getText().equals(game.getRightAnswer()))
+                if (ans3.getText().equals(currentQuestion.getRightAnswer()))
                     score += 100;
                 break;
 
             case R.id.ans4:
-                if (ans4.getText().equals(game.getRightAnswer()))
+                if (ans4.getText().equals(currentQuestion.getRightAnswer()))
                     score += 100;
                 break;
         }
+
+        Intent i = new Intent(GamePage.this, ResultActivity.class);
         if (currentQuestionNumber < countOfQuestions) {
-            game.getNewTask(questions[currentQuestionNumber++]);
             updateScreen();
+            currentQuestionNumber++;
         } else {
             i.putExtra("score", String.valueOf(score));
             startActivity(i);
         }
-
     }
 
     public void updateScreen() {
-        questionTextView.setText(game.getTask());
-        ans1.setText(game.getAnswer1());
-        ans2.setText(game.getAnswer2());
-        ans3.setText(game.getAnswer3());
-        ans4.setText(game.getAnswer4());
+        currentQuestion = game.getRandomItem();
+        questionTextView.setText(currentQuestion.getTask());
+        ans1.setText(currentQuestion.getAnswer1());
+        ans2.setText(currentQuestion.getAnswer2());
+        ans3.setText(currentQuestion.getAnswer3());
+        ans4.setText(currentQuestion.getAnswer4());
         scoreTextView.setText("Счет: " + String.valueOf(score));
     }
-
 
     @Override
     public void onBackPressed() {

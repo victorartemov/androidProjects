@@ -10,6 +10,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.LogRecord;
 import android.os.Message;
@@ -20,14 +23,7 @@ public class GetReady extends AppCompatActivity {
     Animation anim;
     String buf;
 
-    //В этой activity два потока, основной, и поток, выводящий цифры. Переход на activity игры
-    //выполняется из дополнительного потока, поэтому если нажать кнопку "назад" в то время, когда
-    //еще не вывелись все цифры, выполнится переход на начальную activity, но когда тот дополнительный
-    //поток закончит вывод цифр, все равно сработает intent, перекидывающий нас на activity игры.
-    //Скорее всего при нажатии кнопки можно остановить поток, и проблема исчезнет, но я пока еще
-    //не умею так сделать и довольствуюсь флагом. Как только лучше узнаю потоки, перепишу этот код.
     boolean backButtonWasPressed;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +39,30 @@ public class GetReady extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        /*ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+        Runnable job = new Runnable() {
+            int cnt = 3;
+            @Override
+            public void run() {
+                buf = "" + cnt;
+                h.sendEmptyMessage(0);
+                cnt--;
+            }
+        };
+        service.scheduleAtFixedRate(job, 0, 1, TimeUnit.SECONDS);
+        try {
+            service.awaitTermination(3, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        service.shutdownNow();*/
+
         Thread updatingBigRedNumbers = new Thread(
                 new Runnable() {
                     @Override
                     public void run() {
+
                         buf = "3";
                         h.sendEmptyMessage(0);
                         try {
