@@ -9,109 +9,105 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mycompany.demoapp.GamePage">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/topll">
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignParentTop="true"
+        android:text="Score: 0"
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/scoreTextView" />
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Время: 00:00"
-            android:textAlignment="viewStart"
-            android:layout_gravity="start"
-            android:id="@+id/timeTextView"
-            android:textSize="23sp"
-            android:layout_weight="1"
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"/>
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Очки: 100000"
-            android:textAlignment="viewEnd"
-            android:layout_gravity="end"
-            android:id="@+id/scoreTextView"
-            android:textSize="23sp"
-            android:layout_weight="1"
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"/>
-
-    </LinearLayout>
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:id="@+id/progressBar"
+        android:layout_below="@+id/scoreTextView"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="100 - 100 - 77 = ?"
+        android:text="100 - 100 + 33 = ?"
+        android:textSize="35sp"
         android:id="@+id/questionTextView"
-        android:layout_below="@+id/topll"
-        android:textSize="38dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="66dp" />
+        android:layout_below="@+id/progressBar"
+        android:layout_centerHorizontal="true" />
 
-    <TableRow
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/questionTextView"
-        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/tableRow">
+        android:splitMotionEvents="false"
+        android:layout_marginTop="80dp">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="-77"
-            android:layout_weight="1"
-            android:textSize="60sp"
-            android:textAlignment="center"
-            android:clickable="true"
-            android:id="@+id/ans1" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:splitMotionEvents="false"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="23"
-            android:layout_weight="1"
-            android:textSize="60sp"
-            android:textAlignment="center"
-            android:clickable="true"
-            android:id="@+id/ans2" />
-    </TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="140"
+                android:textAlignment="center"
+                android:textSize="60dp"
+                android:layout_margin="8dp"
+                android:id="@+id/answer1TextView"
+                android:layout_weight="1"
+                android:clickable="true"/>
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tableRow"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp">
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="7"
-            android:layout_weight="1"
-            android:textSize="60sp"
-            android:textAlignment="center"
-            android:clickable="true"
-            android:id="@+id/ans3" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="-77"
+                android:textAlignment="center"
+                android:textSize="60dp"
+                android:layout_margin="8dp"
+                android:id="@+id/answer2TextView"
+                android:layout_weight="1"
+                android:clickable="true"/>
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="43"
-            android:layout_weight="1"
-            android:textSize="60sp"
-            android:textAlignment="center"
-            android:clickable="true"
-            android:id="@+id/ans4" />
-    </TableRow>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:splitMotionEvents="false"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="14"
+                android:textAlignment="center"
+                android:textSize="60dp"
+                android:layout_margin="8dp"
+                android:id="@+id/answer3TextView"
+                android:layout_weight="1"
+                android:clickable="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="9"
+                android:textAlignment="center"
+                android:textSize="60dp"
+                android:layout_margin="8dp"
+                android:id="@+id/answer4TextView"
+                android:layout_weight="1"
+                android:clickable="true"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Demo App</string>
+    <string name="app_name">Counting Rush</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="title_activity_game_page">Game</string>
     <string name="title_activity_settings">Settings</string>

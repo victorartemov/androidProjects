@@ -8,7 +8,6 @@ public class Game {
     private Random rnd = new Random();
 
     public Game() {
-
     }
 
     public void setGameItems(ArrayList<GameItem> questions) {
