@@ -7,6 +7,7 @@ public class GameItem {
     private String answer3;
     private String answer4;
     private String rightAnswer;
+    private boolean used;
 
     public GameItem() {
         this.task = "0";
@@ -15,6 +16,7 @@ public class GameItem {
         this.answer3 = "0";
         this.answer4 = "0";
         this.rightAnswer = "0";
+        this.used = false;
     }
 
     public GameItem(String input) {
@@ -22,8 +24,8 @@ public class GameItem {
     }
 
     public GameItem(String task, String answer1, String answer2, String answer3,
-                    String answer4, String rightAnswer) {
-        this.createGameItem(task, answer1, answer2, answer3, answer4, rightAnswer);
+                    String answer4, String rightAnswer, boolean used) {
+        this.createGameItem(task, answer1, answer2, answer3, answer4, rightAnswer, used);
     }
 
     public void getNewTask(String input) {
@@ -61,6 +63,9 @@ public class GameItem {
     public String getRightAnswer() {
         return rightAnswer;
     }
+    public boolean isUsed(){
+        return this.used;
+    }
 
     public void setTask(String task) {
         this.task = task;
@@ -80,14 +85,18 @@ public class GameItem {
     public void setRightAnswer(String rightAnswer) {
         this.rightAnswer = rightAnswer;
     }
+    public void setUsed(boolean used){
+        this.used = used;
+    }
 
     public void createGameItem(String task, String answer1, String answer2, String answer3,
-                               String answer4, String rightAnswer) {
+                               String answer4, String rightAnswer, boolean used) {
         this.setTask(task);
         this.setAnswer1(answer1);
         this.setAnswer2(answer2);
         this.setAnswer3(answer3);
         this.setAnswer4(answer4);
         this.setRightAnswer(rightAnswer);
+        this.setUsed(used);
     }
 }
